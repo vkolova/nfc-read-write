@@ -1,0 +1,13 @@
+{
+  "name": "com.megster.nfc.reader",
+  "version": "0.0.1",
+  "displayName": "NfcReader",
+  "cordova": {
+    "platforms": [
+      "android"
+    ]
+  },
+  "dependencies": {
+    "cordova-android": "~7.1.2"
+  }
+}

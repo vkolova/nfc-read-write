@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=320, user-scalable=no" />
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>NFC</title>
+<link rel="stylesheet" href="css/index.css" type="text/css" media="screen" title="no title" charset="utf-8">
+</head>
+
+<body>
+    <div id="screen-1" class="screen">
+        <h1>Въведение</h1>
+        <p>От електронни писма, през лично банкиране и приложения за следене на здравето, все повече използваме мобилните ни устройства, за да ни помагат в ежедневието.</p>
+        <p>NFC е създаден, за да разреши обмяната на различни видове информация, като телефонни номера, снимки, MP3 файлове или дигитална ауторизация между две NFC устройства като мобилни телефони, или между NFC телефон и съвместима RFID чип карта или четец, които са на близко разстояние. NFC е създаден, за да се използва като ключ за достъп до съдържание и за услуги като заплащия, билети и контрол на достъпа.</p>
+
+        <div class="btn-line">
+            <div class="btn btn-next">Напред</div>
+        </div>
+    </div>
+
+    <div id="screen-2" class="screen">
+        <h1>Записване на NFC таг</h1>
+
+        <form>
+            Mime тип:<br/>
+            <input type="text" name="mimeType" value="text/pg" size="30" /><br/>
+            Данни:<br/>
+            <textarea name="payload" rows="10" cols="30">Hello, world</textarea>
+        </form>
+        <p>
+            Доближете NFC таг, за да запишете данните.
+        </p>
+
+        <div class="btn-line">
+            <div class="btn btn-prev">Назад</div>
+            <div class="flex-baloon"></div>
+            <div class="btn btn-next">Напред</div>
+        </div>
+    </div>
+
+    <div id="screen-3" class="screen">
+        <h1>Четене от NFC таг</h1>
+
+        <div id="tagContents">
+            <div class="spinner">
+                <div class="double-bounce1"></div>
+                <div class="double-bounce2"></div>
+            </div>
+            <div class="hidden">
+                Доближете NFC таг.
+            </div>
+        </div>
+
+        <div class="btn-line">
+            <div class="btn btn-prev">Назад</div>
+            <div class="flex-baloon"></div>
+            <div class="btn btn-next">Напред</div>
+        </div>
+    </div>
+
+    <script id="non-ndef-template" type="text/x-handlebars-template">
+        <p>Прочетен е не-NDEF NFC таг</p>
+        <p>
+            Таг ID: <strong>{{ bytesToHexString id }}</strong>
+        </p>
+    </script>
+
+    <script id="tag-template" type="text/x-handlebars-template">
+        <p>Прочетен е NDEF таг с {{ ndefMessage.length }} {{ pluralize ndefMessage.length 'запис' 'записа' }}</p>
+
+        {{!
+            BB10 and WP8 will not have any meta info
+            Android P2P will not have id, but will have type
+        }}
+        <dl>
+            {{#if id}}
+            <dt>Таг ID</dt>             <dd>{{ bytesToHexString id }}</dd>
+            {{/if}}
+
+            {{#if type}}
+            <dt>Тип на тага</dt>           <dd>{{ type }}</dd>
+            {{/if}}
+
+            {{#if maxSize }}
+            <dt>Максимален размер</dt>           <dd>{{ maxSize }} bytes</dd>
+            {{/if}}
+
+            {{#if freeSpaceSize }}
+            <dt>Свободно пространство</dt>         <dd>{{ freeSpaceSize }} bytes</dd>
+            {{/if}}
+
+            {{#if id}}
+            <dt>Програмируем</dt>        <dd>{{ toString isWritable }}</dd>
+            <dt>Може да се направи само за четене</dt> <dd>{{ toString canMakeReadOnly }}</dd>
+            {{/if}}
+        </dl>
+
+        {{#each ndefMessage}}  {{! does not read well, iterating on records non messages}}
+        <div class='record'>
+            Запис {{ @index }}:<br/>
+            TNF: <b>{{ tnfToString tnf }}</b><br/>
+            {{#if tnf}}
+                Вид на записа: <b>{{ bytesToString type }}</b><br/>
+                Данни: <b>{{ decodePayload this }}</b><br/>
+                {{#if id}}
+                    Запис ID: <b>{{ bytesToString id }}</b><br/>
+                {{/if}}
+            {{/if}}
+        </div>
+        {{/each}}
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/handlebars.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/index.js"></script>
+    <script type="text/javascript">
+        app.initialize();
+    </script>
+</body>
+</html>
