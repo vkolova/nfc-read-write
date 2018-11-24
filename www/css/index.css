@@ -11,7 +11,7 @@ body {
   bottom: 0;
   right: 0;
 
-  background-color: rgba(168, 167, 167, 0.3);
+  background-color: rgba(168, 167, 167, 0.10);
   color: black;
 }
 
@@ -154,4 +154,8 @@ textarea {
 
 .text-indent {
   padding-left: 3vw;
+}
+
+img {
+    max-width: 90vw;
 }

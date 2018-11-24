@@ -11,7 +11,7 @@
     <div id="screen-1" class="screen">
         <h1>Какво е NFC?</h1>
         <p>Near field communication (комуникация на къси разстояния), накратко NFC, е вид безконтактна комуникация между устройства като смарт телефони или таблети. Безконтактната комуникация позволява на потребителя да помаха с телефон покрай съвместимо с NFC устройство, за да изпрати информацията, без да се налага докосване на устройствата или конфигуриране на връзката с няколко стъпки.</p>
-        
+
         <h1>Ключови характеристики на NFC</h1>
         <ul>
             <li>Безжична технология за комуникация</li>
@@ -71,7 +71,7 @@
         <!-- <img src="" alt=""> -->
         <p>Структура на NDEF съобщение с детайли за байтовете на заглавната част</p>
         <p>Както се вижда на фигурата, NDEF записът съдържа име на типа формат (TNF, Type Name Format), тип на товара, идентификатор на товара и самия товар. Товарът е най-важната част в NDEF записите – предава се неговото съдържание. Типът на товара е NFC специфичен тип, MIME медиен тип или URI, който казва как да се интерпретира товара. Идентификаторът на товара не е задължителен.</p>
-        
+
         <h3>Тип на формата</h3>
         <p>NEDF записите започват с име на типа формата. TNF показва структурата на стойността на полето за тип и как да се интерпретира. Има няколко възможни TNF стойности:</p>
         <ol>
@@ -177,7 +177,7 @@
                     <p>тип: U</p>
                     <p>пример за payload: https://www.google.com/</p>
             </div>
-    
+
             <div class="btn-line">
                 <div class="btn btn-prev">Назад</div>
                 <div class="flex-baloon"></div>
@@ -189,10 +189,10 @@
         <h1>Записване на NFC таг</h1>
 
         <form>
-            Mime тип:<br/>
-            <input type="text" name="mimeType" value="text/pg" size="30" /><br/>
+            Тип на данните:<br/>
+            <input type="text" name="mimeType" value="" size="30" /><br/>
             Данни:<br/>
-            <textarea name="payload" rows="10" cols="30">Hello, world</textarea>
+            <textarea name="payload" rows="10" cols="30"></textarea>
         </form>
         <p>
             Доближете NFC таг, за да запишете данните.
@@ -222,6 +222,25 @@
             <div class="btn btn-prev">Назад</div>
             <div class="flex-baloon"></div>
             <div class="btn btn-next">Напред</div>
+        </div>
+    </div>
+
+    <div id="screen-6" class="screen">
+        <h1>Режим peer-to-peer</h1>
+
+        <form>
+            Mime Type:<br/>
+                <input type="text" name="mimeType" value="text/pg" size="30" /><br/>
+            Payload:<br/>
+            <textarea name="payload" rows="10" cols="30">hello, world</textarea>
+            <br/>
+            <input type="checkbox" name="share" id="checkbox" value="Share"/><label for="checkbox">Share Message</label>
+        </form>
+        <div id="statusDiv"></div>
+
+        <div class="btn-line">
+            <div class="btn btn-prev">Назад</div>
+            <div class="flex-baloon"></div>
         </div>
     </div>
 

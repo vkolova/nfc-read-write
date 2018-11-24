@@ -1,18 +1,46 @@
+function writeTag(nfcEvent) {
+  var mimeType = document.forms[0].elements["mimeType"].value,
+    payload = document.forms[0].elements["payload"].value,
+    record = ndef.mimeMediaRecord(mimeType, nfc.stringToBytes(payload));
+
+  nfc.write(
+        [record],
+        function () {
+            window.plugins.toast.showShortBottom("Записано!");
+            navigator.notification.vibrate(100);
+        },
+        function (reason) {
+            navigator.notification.alert(reason, function() {}, "There was a problem");
+        }
+  );
+
+//   var message = [
+//     ndef.textRecord("hello, world"),
+//     ndef.uriRecord("http://github.com/chariotsolutions/phonegap-nfc")
+// ];
+
+}
+
+
+const writeScreenID = 4;
 var app = {
     initialize: function () {
         this.bind();
-        this.activeScreen = 2;
+        app.activeScreen = 1;
+        app.activeWriteScreen = null;
 
         document.getElementById(`screen-${this.activeScreen}`).style.display = 'block';
     },
     next: function () {
         document.getElementById(`screen-${app.activeScreen}`).style.display = 'none';
         app.activeScreen++;
+        window.scroll({ top: 0 });
         document.getElementById(`screen-${app.activeScreen}`).style.display = 'block';
     },
     prev: function () {
         document.getElementById(`screen-${app.activeScreen}`).style.display = 'none';
         app.activeScreen--;
+        window.scroll({ top: 0 });
         document.getElementById(`screen-${app.activeScreen}`).style.display = 'block';
     },
     bind: function () {
@@ -30,11 +58,14 @@ var app = {
     },
     deviceready: function () {
         function failure(reason) {
-            navigator.notification.alert(reason, function() {}, "There was a problem");
+            navigator.notification.alert(reason, function() {}, "Имаше проблем");
         }
 
+        document.getElementById('checkbox').addEventListener('change', app.toggleCheckbox, false);
+        nfc.addTagDiscoveredListener(writeTag, () => {}, failure);
+
         nfc.addNdefListener(
-            app.onNdef,
+            event => app.activeScreen == writeScreenID ? writeTag(event) : app.onNdef(event),
             function() {
                 console.log("Listening for NDEF tags.");
             },
@@ -45,7 +76,7 @@ var app = {
 
             // Android reads non-NDEF tag. BlackBerry and Windows don't.
             nfc.addTagDiscoveredListener(
-                app.onNfc,
+                event => app.activeScreen == writeScreenID ? writeTag(event) : app.onNdef(event),
                 function() {
                     console.log("Listening for non-NDEF tags.");
                 },
@@ -58,7 +89,7 @@ var app = {
             // the code reuses the same onNfc handler
             nfc.addMimeTypeListener(
                 'text/pg',
-                app.onNdef,
+                event => app.activeScreen == writeScreenID ? writeTag(event) : app.onNdef(event),
                 function() {
                     console.log("Listening for NDEF mime tags with type text/pg.");
                 },
@@ -99,17 +130,13 @@ var app = {
         navigator.notification.vibrate(100);
     },
     clearScreen: function () {
-
         tagContents.innerHTML = "";
-
     },
     showInstructions: function () {
-
         var hidden = document.getElementsByClassName('hidden');
         if (hidden && hidden.length) {
             hidden[0].className = 'instructions';
         }
-
     },
     compileTemplates: function () {
         var source;
@@ -122,7 +149,6 @@ var app = {
 
     },
     addTemplateHelpers: function () {
-
         Handlebars.registerHelper('bytesToString', function(byteArray) {
             return nfc.bytesToString(byteArray);
         });
@@ -148,7 +174,57 @@ var app = {
           if (number === 1) { return single; }
           else { return plural; }
         });
-    }
+    },
+    disableUI: function () {
+        document.forms[0].elements.mimeType.disabled = true;
+        document.forms[0].elements.payload.disabled = true;
+    },
+    enableUI: function () {
+        document.forms[0].elements.mimeType.disabled = false;
+        document.forms[0].elements.payload.disabled = false;
+    },
+    toggleCheckbox: function (e) {
+        if (e.target.checked) {
+            app.shareMessage();
+        } else {
+            app.unshareMessage();
+        }
+    },
+    shareMessage: function () {
+        console.log('share');
+        var mimeType = document.forms[1].elements.mimeType.value,
+            payload = document.forms[1].elements.payload.value,
+            record = ndef.mimeMediaRecord(mimeType, nfc.stringToBytes(payload));
+
+        app.disableUI();
+
+        nfc.share(
+            [record],
+            function () {
+                // Android call the success callback when the message is sent to peer
+                navigator.notification.vibrate(100);
+                window.plugins.toast.showShortBottom("Съобщението се споделя.");
+            },
+            function (reason) {
+                navigator.notification.alert(reason, function() {}, "Имаше проблем!");
+                checkbox.checked = false;
+                app.enableUI();
+            }
+        );
+        },
+        unshareMessage: function () {
+            console.log('unshare');
+            app.enableUI();
+
+            nfc.unshare(
+                function () {
+                    navigator.notification.vibrate(100);
+                    window.plugins.toast.showShortBottom("Съобщението не се споделя.");
+                }, function (reason) {
+                    navigator.notification.alert(reason, function() {}, "Имаше проблем!");
+                }
+            );
+        }
 };
 
 // ideally some form of this can move to phonegap-nfc util
@@ -182,6 +258,7 @@ function decodePayload(record) {
         payload = nfc.bytesToString(record.payload);
     }
 
+    console.log(payload, record);
     return payload;
 }
 

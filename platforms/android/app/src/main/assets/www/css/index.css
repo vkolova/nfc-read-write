@@ -11,13 +11,13 @@ body {
   bottom: 0;
   right: 0;
 
-  background-color: rgba(168, 167, 167, 0.3);
+  background-color: rgba(168, 167, 167, 0.10);
   color: black;
 }
 
 .screen {
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
 
     padding: 5vw;
     display: none;
@@ -45,8 +45,12 @@ body {
     flex: 1;
 }
 
-p {
+p{
     text-indent: 5vw;
+}
+
+ul, ol {
+  padding-left: 8vw;
 }
 
 #tagContents {
@@ -66,7 +70,7 @@ p {
   opacity: 0;
 }
 
-h1 {
+h1, h2, h3 {
   padding-left: 3vw;
 }
 
@@ -131,10 +135,27 @@ div.record {
   }
 }
 
-
 input,
 textarea {
     width: 100%;
     border: none;
     padding: 10px;
+}
+
+.example-write-type {
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.text-indent {
+  padding-left: 3vw;
+}
+
+img {
+    max-width: 90vw;
 }

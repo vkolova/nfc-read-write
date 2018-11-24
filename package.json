@@ -5,9 +5,17 @@
   "cordova": {
     "platforms": [
       "android"
-    ]
+    ],
+    "plugins": {
+      "cordova-plugin-dialogs": {},
+      "cordova-plugin-x-toast": {},
+      "cordova-plugin-vibration": {}
+    }
   },
   "dependencies": {
-    "cordova-android": "~7.1.2"
+    "cordova-android": "~7.1.2",
+    "cordova-plugin-dialogs": "^2.0.1",
+    "cordova-plugin-vibration": "^3.1.0",
+    "cordova-plugin-x-toast": "^2.7.2"
   }
 }

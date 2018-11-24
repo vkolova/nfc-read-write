@@ -6,7 +6,14 @@
   "config_munge": {
     "files": {}
   },
-  "installed_plugins": {},
+  "installed_plugins": {
+    "cordova-plugin-dialogs": {
+      "PACKAGE_NAME": "com.megster.nfc.reader"
+    },
+    "cordova-plugin-x-toast": {
+      "PACKAGE_NAME": "com.megster.nfc.reader"
+    }
+  },
   "dependent_plugins": {
     "com.blackberry.invoke": {
       "PACKAGE_NAME": "com.megster.nfc.reader"

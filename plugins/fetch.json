@@ -22,5 +22,29 @@
       "type": "local",
       "path": "/var/folders/d7/l_4xwx_j3ys3_9yg0rvggdvr0000gn/T/org.apache.cordova.vibration/package"
     }
+  },
+  "cordova-plugin-dialogs": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-dialogs"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-x-toast": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-x-toast"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-vibration": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-vibration"
+    },
+    "is_top_level": true,
+    "variables": {}
   }
 }
