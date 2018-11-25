@@ -2,12 +2,15 @@
 <widget id="com.megster.nfc.reader" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>NFC</name>
     <description>
-        NFC
+        NFC Read and Write Application
     </description>
+    <platform name="android" />
+    <icon src="res/icon/logo.png" />
     <author email="vmkolova@gmail.com">
         Veselina Kolova
     </author>
     <access origin="*" />
+    <platform name="android" />
     <preference name="fullscreen" value="true" />
     <preference name="webviewbounce" value="true" />
     <content src="index.html" />

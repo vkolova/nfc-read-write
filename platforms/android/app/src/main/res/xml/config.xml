@@ -17,8 +17,9 @@
     </feature>
     <name>NFC</name>
     <description>
-        NFC
+        NFC Read and Write Application
     </description>
+    <icon src="res/icon/logo.png" />
     <author email="vmkolova@gmail.com">
         Veselina Kolova
     </author>

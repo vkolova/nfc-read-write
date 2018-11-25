@@ -45,7 +45,7 @@ body {
     flex: 1;
 }
 
-p{
+p {
     text-indent: 5vw;
 }
 
@@ -140,6 +140,11 @@ textarea {
     width: 100%;
     border: none;
     padding: 10px;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    width: unset;
 }
 
 .example-write-type {

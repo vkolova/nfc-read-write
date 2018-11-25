@@ -189,10 +189,17 @@
         <h1>Записване на NFC таг</h1>
 
         <form>
+            TNF:<br/>
+            <label>
+                <input id="mimeMedia1" type="radio" name="mime" value="mime" /> Mime Media
+            </label><br/>
+            <label>
+                <input type="radio" name="media" value="well" />Well Known
+            </label><br/><br/><br/>
             Тип на данните:<br/>
-            <input type="text" name="mimeType" value="" size="30" /><br/>
+            <input type="text" name="mimeType" value="" size="30" /><br/><br/><br/>
             Данни:<br/>
-            <textarea name="payload" rows="10" cols="30"></textarea>
+            <textarea name="payload" rows="10" cols="30"></textarea><br/>
         </form>
         <p>
             Доближете NFC таг, за да запишете данните.
@@ -229,14 +236,21 @@
         <h1>Режим peer-to-peer</h1>
 
         <form>
+            TNF:<br/>
+            <label>
+                <input id="mimeMedia2" type="radio" name="mime" value="mime" /> Mime Media
+            </label><br/>
+            <label>
+                <input type="radio" name="media" value="well" />Well Known
+            </label><br/><br/><br/>
             Mime Type:<br/>
-                <input type="text" name="mimeType" value="text/pg" size="30" /><br/>
-            Payload:<br/>
-            <textarea name="payload" rows="10" cols="30">hello, world</textarea>
+                <input type="text" name="mimeType" value="" size="30" /><br/><br/>
+            Данни:<br/>
+            <textarea name="payload" rows="10" cols="30"></textarea><br/>
             <br/>
-            <input type="checkbox" name="share" id="checkbox" value="Share"/><label for="checkbox">Share Message</label>
+            <input type="checkbox" name="share" id="checkbox" value="Share"/><label for="checkbox">Сподели съобщението</label>
         </form>
-        <div id="statusDiv"></div>
+        <div id="statusDiv">Доближете NFC устройство, за да споделите</div>
 
         <div class="btn-line">
             <div class="btn btn-prev">Назад</div>

@@ -2,22 +2,41 @@ function writeTag(nfcEvent) {
   var mimeType = document.forms[0].elements["mimeType"].value,
     payload = document.forms[0].elements["payload"].value,
     record = ndef.mimeMediaRecord(mimeType, nfc.stringToBytes(payload));
+    mimeMedia = window.mimeMedia1.checked
 
-  nfc.write(
-        [record],
-        function () {
-            window.plugins.toast.showShortBottom("Записано!");
-            navigator.notification.vibrate(100);
-        },
-        function (reason) {
-            navigator.notification.alert(reason, function() {}, "There was a problem");
+    if (mimeMedia) {
+        nfc.write(
+            [record],
+            function () {
+                window.plugins.toast.showShortBottom("Записано");
+                navigator.notification.vibrate(100);
+            },
+            function (reason) {
+                navigator.notification.alert(reason, function() {}, "Възникна грешка");
+            }
+        );
+    } else {
+        if (mimeType === 'T') {
+            var message = [
+              ndef.textRecord(payload)
+          ];
+        } else {
+            var message = [
+              ndef.uriRecord(payload)
+          ];
         }
-  );
 
-//   var message = [
-//     ndef.textRecord("hello, world"),
-//     ndef.uriRecord("http://github.com/chariotsolutions/phonegap-nfc")
-// ];
+        nfc.write(
+            message,
+            function () {
+                window.plugins.toast.showShortBottom("Записано");
+                navigator.notification.vibrate(100);
+            },
+            function (reason) {
+                navigator.notification.alert(reason, function() {}, "Възникна грешка");
+            }
+        );
+    }
 
 }
 
@@ -58,7 +77,7 @@ var app = {
     },
     deviceready: function () {
         function failure(reason) {
-            navigator.notification.alert(reason, function() {}, "Имаше проблем");
+            navigator.notification.alert(reason, function() {}, "Възникна грешка");
         }
 
         document.getElementById('checkbox').addEventListener('change', app.toggleCheckbox, false);
@@ -191,10 +210,18 @@ var app = {
         }
     },
     shareMessage: function () {
-        console.log('share');
         var mimeType = document.forms[1].elements.mimeType.value,
             payload = document.forms[1].elements.payload.value,
             record = ndef.mimeMediaRecord(mimeType, nfc.stringToBytes(payload));
+        var mimeMedia = window.mimeMedia2.checked
+
+        if (!mimeMedia) {
+            if (mimeType === 'U') {
+                var record = ndef.uriRecord(payload);
+            } else {
+                var record = ndef.textRecord(payload);
+            }
+        }
 
         app.disableUI();
 
@@ -206,14 +233,13 @@ var app = {
                 window.plugins.toast.showShortBottom("Съобщението се споделя.");
             },
             function (reason) {
-                navigator.notification.alert(reason, function() {}, "Имаше проблем!");
+                navigator.notification.alert(reason, function() {}, "Възникна грешка");
                 checkbox.checked = false;
                 app.enableUI();
             }
         );
         },
         unshareMessage: function () {
-            console.log('unshare');
             app.enableUI();
 
             nfc.unshare(
@@ -221,7 +247,7 @@ var app = {
                     navigator.notification.vibrate(100);
                     window.plugins.toast.showShortBottom("Съобщението не се споделя.");
                 }, function (reason) {
-                    navigator.notification.alert(reason, function() {}, "Имаше проблем!");
+                    navigator.notification.alert(reason, function() {}, "Възникна грешка!");
                 }
             );
         }
