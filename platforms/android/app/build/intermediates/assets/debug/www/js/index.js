@@ -2,7 +2,9 @@ function writeTag(nfcEvent) {
   var mimeType = document.forms[0].elements["mimeType"].value,
     payload = document.forms[0].elements["payload"].value,
     record = ndef.mimeMediaRecord(mimeType, nfc.stringToBytes(payload));
-    mimeMedia = window.mimeMedia1.checked
+    mimeMedia = document.getElementsByName("tnf-1")[0].checked
+
+    console.log(mimeMedia);
 
     if (mimeMedia) {
         nfc.write(
@@ -213,7 +215,7 @@ var app = {
         var mimeType = document.forms[1].elements.mimeType.value,
             payload = document.forms[1].elements.payload.value,
             record = ndef.mimeMediaRecord(mimeType, nfc.stringToBytes(payload));
-        var mimeMedia = window.mimeMedia2.checked
+        var mimeMedia = document.getElementsByName("tnf-2")[0].value === "mime"
 
         if (!mimeMedia) {
             if (mimeType === 'U') {

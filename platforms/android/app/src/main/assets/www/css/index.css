@@ -142,6 +142,10 @@ textarea {
     padding: 10px;
 }
 
+textarea:focus {
+    margin-bottom: 300px;
+}
+
 input[type="checkbox"],
 input[type="radio"] {
     width: unset;
